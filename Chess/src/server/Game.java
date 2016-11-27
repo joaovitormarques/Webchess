@@ -30,14 +30,16 @@ public class Game implements Runnable{
 					y1 = player1.br.read() - 48;
 				}
 				catch(Exception e){
-					e.printStackTrace();
+					System.out.println("Jogador das brancas desconectou.");
+					player2.ps.println("O outro jogador desconectou. Você venceu.");
+					//e.printStackTrace();
 					try {
 						player1.free();
 						player2.free();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					break;
+					return;
 				}
 			}
 			//Receber input das pretas
@@ -49,14 +51,16 @@ public class Game implements Runnable{
 					y1 = player2.br.read() - 48;
 				}
 				catch(Exception e){
-					e.printStackTrace();
+					System.out.println("Jogador das pretas desconectou.");
+					player1.ps.println("O outro jogador desconectou. Você venceu.");
+					//e.printStackTrace();
 					try {
 						player1.free();
 						player2.free();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					break;
+					return;
 				}
 			}
 			//Tentar realizar o movimento
@@ -74,7 +78,7 @@ public class Game implements Runnable{
 		if(stalemate){
 			player1.ps.println("afogamento");
 			player2.ps.println("afogamento");
-				
+			return;
 		}
 		//Fim de jogo: enviar resultado aos clientes
 		if(checkmate){
@@ -87,6 +91,7 @@ public class Game implements Runnable{
 				player2.ps.println("Vitoria das brancas.");
 			}
 		}
+		return;
 	}
 
 	//Realizar um movimento no jogo
